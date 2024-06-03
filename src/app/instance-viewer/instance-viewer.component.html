@@ -1,0 +1,24 @@
+<div>
+  <h2>Instance Viewer - {{ className }}</h2>
+  <div *ngFor="let instance of instances; let i = index">
+    <div *ngIf="editIndex !== i">
+      <div *ngFor="let field of getFields(instance)">
+        {{ field.key }}: {{ field.value }}
+      </div>
+      <button (click)="startEditing(i)">Edit</button>
+      <button (click)="classManager.deleteInstance(className, i)">Delete</button>
+    </div>
+    <div *ngIf="editIndex === i">
+      <form [formGroup]="editForm">
+        <div formArrayName="fields">
+          <div *ngFor="let field of get(editForm.get('fields')); let j = index" [formGroupName]="j">
+            <label>{{ field.value.key }}</label>
+            <input type="text" [formControlName]="field.value.key" />
+          </div>
+        </div>
+      </form>
+      <button (click)="saveEdit()">Save</button>
+      <button (click)="editIndex = null">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div>
+  <h2>Create Class</h2>
+  <input [(ngModel)]="className" placeholder="Class Name" />
+  <div>
+    <input [(ngModel)]="fieldName" placeholder="Field Name" />
+    <select [(ngModel)]="fieldType">
+      <option value="string">String</option>
+      <option value="number">Number</option>
+      <option value="boolean">Boolean</option>
+    </select>
+    <input [(ngModel)]="fieldDefaultValue" placeholder="Default Value" />
+    <button (click)="addField()">Add Field</button>
+  </div>
+  <div *ngFor="let key of getFieldKeys()">
+    {{ key }}: {{ fields[key].type }} (Default: {{ fields[key].defaultValue }})
+  </div>
+  <button (click)="createClass()">Create Class</button>
+</div>
+<div>
+  <h2>Create Instance</h2>
+  <select [(ngModel)]="selectedClass">
+    <option *ngFor="let className of classNames" [value]="className">{{ className }}</option>
+  </select>
+  <div *ngIf="selectedClass">
+    <div *ngFor="let field of classManager.getFieldDefinitions(selectedClass)">
+      <input [(ngModel)]="instanceValues[field.name]" placeholder="Value for {{ field.name }}" />
+    </div>
+    <button (click)="createInstance(selectedClass,instanceValues)">Create Instance</button>
+  </div>
+  <button (click)="getsd()">go</button>
+</div>
